@@ -1,3 +1,15 @@
 from django.shortcuts import render
+from rest_framework import permissions, viewsets
+from apps.college.models import Campus, College
+from django.contrib.auth.models import User
+from apps.college.serializers import CollegeSerializer, CampusSerializer
 
-# Create your views here.
+class CollegeViewSet(viewsets.ModelViewSet):
+    queryset = College.objects.all().order_by('-updated_at')
+    serializer_class = CollegeSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+class CampusViewSet(viewsets.ModelViewSet):
+    queryset = Campus.objects.all().order_by('-updated_at')
+    serializer_class = CampusSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
