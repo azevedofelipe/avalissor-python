@@ -16,16 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework.routers import DefaultRouter
+from rest_framework_nested.routers import NestedSimpleRouter 
 
 from apps.college import views
 
 
-router = routers.DefaultRouter()
-router.register(r"college", views.CollegeViewSet)
-router.register(r"campus", views.CampusViewSet)
+router = DefaultRouter()
+router.register(r"colleges", views.CollegeViewSet, basename="college")
+
+colleges_router = NestedSimpleRouter(router, r'colleges',lookup='college')
+colleges_router.register(r'campuses',views.CampusViewSet, basename='college-campuses')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('',include(colleges_router.urls)),
 ]

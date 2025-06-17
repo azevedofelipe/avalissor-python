@@ -10,6 +10,8 @@ class CollegeViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 class CampusViewSet(viewsets.ModelViewSet):
-    queryset = Campus.objects.all().order_by('-updated_at')
     serializer_class = CampusSerializer
+
+    def get_queryset(self):
+        return Campus.objects.filter(college=self.kwargs['college_pk'])
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
