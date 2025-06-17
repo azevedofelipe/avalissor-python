@@ -28,8 +28,12 @@ router.register(r"colleges", views.CollegeViewSet, basename="college")
 colleges_router = NestedSimpleRouter(router, r'colleges',lookup='college')
 colleges_router.register(r'campuses',views.CampusViewSet, basename='college-campuses')
 
+campuses_router = NestedSimpleRouter(colleges_router,r'campuses',lookup='campus')
+campuses_router.register(r'reviews',views.CampusReviewViewSet, basename='campus-reviews')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(router.urls)),
-    path('',include(colleges_router.urls)),
+    path('api/', include(router.urls)),
+    path('api/',include(colleges_router.urls)),
+    path('api/',include(campuses_router.urls)),
 ]

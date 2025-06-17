@@ -5,15 +5,16 @@ from apps.college.models import Campus, College, ReviewCampus
 class CollegeSerializer(serializers.ModelSerializer):
     class Meta:
         model = College
-        fields = ["name","tipo","created_at","updated_at"]
-
+        fields = ["id","name","tipo","created_at","updated_at"]
 
 class CampusSerializer(serializers.ModelSerializer):
     class Meta:
         model = Campus
-        fields = ["college","name","location","created_at","updated_at"]
+        fields = ["id", "name","location","created_at","updated_at"]
+        read_only_fields = ["college"]
 
 class CampusReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReviewCampus
-        fields = ["campus","rating","comment","created_at","updated_at"]
+        fields = ["id","rating","comment","created_at","updated_at"]
+        read_only_fields = ["campus"]
