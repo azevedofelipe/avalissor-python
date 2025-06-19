@@ -19,7 +19,7 @@ class Professor(models.Model):
         return str(self.name)
 
 class ReviewProfessor(models.Model):
-    professor = models.ForeignKey(Professor,on_delete=models.CASCADE)
+    professor = models.ForeignKey(Professor,on_delete=models.CASCADE, related_name='professor')
     rating = models.PositiveSmallIntegerField(validators=[MinValueValidator(1),MaxValueValidator(10)])
     comment = models.CharField(max_length=300)
     tags = models.ManyToManyField(Tag, related_name="professors")

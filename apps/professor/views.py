@@ -1,3 +1,4 @@
+from django.db.models.aggregates import Avg, Count
 from rest_framework import permissions, viewsets
 from apps.professor.models import Tag, Professor, ReviewProfessor
 from django.shortcuts import get_object_or_404
@@ -15,6 +16,12 @@ class ProfessorViewSet(viewsets.ModelViewSet):
     queryset = Professor.objects.all().order_by("-updated_at")
     serializer_class = ProfessorSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        return Professor.objects.annotate(
+            rating_count = Count('professor'),
+            avg_rating = Avg('professor__rating')
+        )
 
 class ProfessorReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewProfessorSerializer

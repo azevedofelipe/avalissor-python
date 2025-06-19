@@ -8,9 +8,12 @@ class TagSerializer(serializers.ModelSerializer):
         fields = ["id","name"]
 
 class ProfessorSerializer(serializers.ModelSerializer):
+    avg_rating = serializers.FloatField()
+    rating_count = serializers.IntegerField()
+
     class Meta:
         model = Professor
-        fields = ["id","campus","name","created_at","updated_at"]
+        fields = ["id","campus","name","avg_rating","rating_count","created_at","updated_at"]
 
 class ProfessorMiniSerializer(serializers.ModelSerializer):
     class Meta:
