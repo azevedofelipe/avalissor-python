@@ -12,6 +12,9 @@ class Course(models.Model):
     # Maybe normalize names in future if needed
     name = models.CharField(max_length=50, unique=True)
 
+    def __str__(self):
+        return str(self.name)
+
 class Professor(models.Model):
     campus = models.ForeignKey(Campus,on_delete=models.CASCADE)
     courses = models.ManyToManyField(Course,related_name='professor')
